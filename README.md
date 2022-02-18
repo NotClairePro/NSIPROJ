@@ -1,2 +1,3 @@
-# NSIPROJ
-Projet Nsi 
+# Projet Final NSI
+
+Projet Nsi Jules Claire et Kamil
