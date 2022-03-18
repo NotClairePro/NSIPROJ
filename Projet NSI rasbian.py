@@ -227,4 +227,7 @@ JR = 200
 RSB = 400
 R1 = 600
 R2 = 800
+
+envoie d info sous forme de chaine de carctere avec 2 ou 3 info [ ID_control, pos Y,X si joystick ou True ou False si boutton
+
 '''
