@@ -1,6 +1,5 @@
 import time
 import socket
-'''
 from adafruit_servokit import ServoKit
 
 #==================== Fonction General =======================================================#
@@ -40,9 +39,8 @@ class Servos():
         self.servo12.angle = 85
 
 servos = Servos()
-'''
 
-def Conversion_Chaine_to_List(Chaine):                #Convertisseur de la chaine de carctere recu en liste de valeur >0
+def Conversion_Chaine_to_List(Chaine):                #Convertisseur de la chaine de carctere recu, en liste de valeur >0
     N_chaine = []
     a=''
     for elem in Chaine:
