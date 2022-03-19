@@ -1,16 +1,16 @@
-#from adafruit_servokit import ServoKit
+# from adafruit_servokit import ServoKit
 import multiprocessing
 import Controls
 
 if __name__ == '__main__':
     Manette = Controls.Ctrl()
-    proc = multiprocessing.Process(target=Controls.strt, args = (Manette,))
+    proc = multiprocessing.Process(target=Controls.strt, args=(Manette,))
     proc.start()
     proc.join()
-    
-    #kit = ServoKit(channels = 14)
-    #nbr = int(input('choisire le nbr servo a bouger:'))
-    #ang = int(input('choisire le angle:'))
+
+    # kit = ServoKit(channels = 14)
+    # nbr = int(input('choisire le nbr servo a bouger:'))
+    # ang = int(input('choisire le angle:'))
     """
     #while True:
     #    print(Manette2.T)
@@ -24,5 +24,3 @@ if __name__ == '__main__':
         elif Manette2.X is True:
             ang = int(input('choisire le angle:'))
     """
-
-        

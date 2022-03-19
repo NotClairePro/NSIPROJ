@@ -39,7 +39,6 @@ class Controls:
 
 
 Manette = Controls()
-
 # for al the connected joysticks
 for i in range(0, pygame.joystick.get_count()):
     # create an Joystick object in our list

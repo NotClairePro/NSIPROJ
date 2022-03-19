@@ -1,5 +1,6 @@
 import pygame
 
+
 class Ctrl:
     def __init__(self):
         self.C = False
@@ -16,15 +17,13 @@ class Ctrl:
         self.LSB = False
         self.RSB = False
         self.Pad = False
-        self.JL = [0,0]
-        self.JR = [0,0]
+        self.JL = [0, 0]
+        self.JR = [0, 0]
+
     def __repr__(self):
-        r =  f"Carre:{self.C}, X:{self.X}, Triangle:{self.T}, O:{self.O} \n" f"L1:{self.L1}, R1:{self.R1}, L2:{self.L2}, R2:{self.R2} \n" f"Share:{self.Share}, Opt:{self.Opt}, Menu:{self.Menu}, Pad:{self.Pad} \n" f"LSB:{self.LSB}, RSB:{self.RSB} \n" f"JL:{self.JL}, JR:{self.JR} \n"
+        r = f"Carre:{self.C}, X:{self.X}, Triangle:{self.T}, O:{self.O} \n" f"L1:{self.L1}, R1:{self.R1}, L2:{self.L2}, R2:{self.R2} \n" f"Share:{self.Share}, Opt:{self.Opt}, Menu:{self.Menu}, Pad:{self.Pad} \n" f"LSB:{self.LSB}, RSB:{self.RSB} \n" f"JL:{self.JL}, JR:{self.JR} \n"
         print(r)
         return r
-
-
-
 
 
 def strt(Manette):
@@ -38,8 +37,8 @@ def strt(Manette):
         # initialize them all (-1 means loop forever)
         joysticks[-1].init()
         # print a statement telling what the name of the controller is
-        print ("Detected joystick "),joysticks[-1].get_name(),"'"
-    
+        print("Detected joystick "), joysticks[-1].get_name(), "'"
+
     while True:
         clock.tick(10)
         for event in pygame.event.get():
@@ -50,7 +49,7 @@ def strt(Manette):
                         Manette.JL[event.axis] = 0
                     else:
                         Manette.JL[event.axis] = event.value
-    
+
                 elif event.axis < 4:
                     if 0.1 > event.value > -0.1:
                         Manette.JR[event.axis - 2] = 0
@@ -91,7 +90,7 @@ def strt(Manette):
                     Manette.Menu = True
                 elif event.button == 13:
                     Manette.Pad = True
-                      
+
             elif event.type == pygame.JOYBUTTONUP:
                 if event.button == 0:
                     Manette.C = False
@@ -118,4 +117,3 @@ def strt(Manette):
                 elif event.button == 13:
                     Manette.Pad = False
             print(Manette)
-        
