@@ -5,7 +5,6 @@ from adafruit_servokit import ServoKit
 # ==================== Fonction General =======================================================#
 
 kit = ServoKit(channels=16)
-Etat = 0
 
 
 class Servos:
