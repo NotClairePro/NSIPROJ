@@ -71,6 +71,17 @@ def StatusMode(ID_Control, Etat):
             Etat = 0
     return Etat
 
+def Limite_Position(ID_control):                          #renvoie True ou false
+    if servos.servo1.angles == 180:                       # revoir
+        return servos.servo1.angles == 180
+    elif servos.servo1.angles == 60:
+        return servos.servo1.angles == 60
+    elif servos.servo6.angles == 180:
+        return servos.servo6.angles == 180
+    elif servos.servo6.angles == 60:
+        return servos.servo6.angles == 60
+    pass
+
 def bras(ID_Control):
     ID = Conversion_Chaine_to_List(ID_Control)
     # ===================== Bras Droit ===========================================#
