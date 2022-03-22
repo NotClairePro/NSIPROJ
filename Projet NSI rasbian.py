@@ -1,8 +1,10 @@
 import time
 import socket
 from adafruit_servokit import ServoKit
+
 # ==================== Fonction General =======================================================#
 kit = ServoKit(channels=16)
+
 
 class Servos:
     def __init__(self):
@@ -18,6 +20,7 @@ class Servos:
         self.servos10 = kit.servo[6]
         self.servos11 = kit.servo[5]
         self.servos12 = kit.servo[4]
+
     def angles(self):
         self.servos1.angle = 85
         self.servos2.angle = 85
@@ -31,7 +34,10 @@ class Servos:
         self.servos10.angle = 85
         self.servos11.angle = 85
         self.servos12.angle = 85
+
+
 servos = Servos()
+
 
 def Conversion_Chaine_to_List(Chaine):  # Convertisseur de la chaine de carctere recu, en liste de valeur >0
     N_chaine = []
@@ -55,24 +61,26 @@ def Conversion_Chaine_to_List(Chaine):  # Convertisseur de la chaine de carctere
         N_chaine.append(float(a))
     return N_chaine
 
-#print(Conversion_Chaine_to_List("100,True,False,30,45.5"))
+
+# print(Conversion_Chaine_to_List("100,True,False,30,45.5"))
 
 def StatusMode(ID_Control, Etat):
     ID = Conversion_Chaine_to_List(ID_Control)
     Status = ID[1]
     if ID[0] == 1000:
-        if Status is True and Etat == 0:
+        if Status and Etat == 0:
             Etat = 1
-        if Status is True and Etat == 1:
+        if Status and Etat == 1:
             Etat = 2
-        if Status is True and Etat == 2:
+        if Status and Etat == 2:
             Etat = 3
-        if Status is True and Etat == 3:
+        if Status and Etat == 3:
             Etat = 0
     return Etat
 
-def Limite_Position(ID_control):                          #renvoie True ou false
-    if servos.servo1.angles == 180:                       # revoir
+
+def Limite_Position(ID_control):  # renvoie True ou false
+    if servos.servo1.angles == 180:  # revoir
         return servos.servo1.angles == 180
     elif servos.servo1.angles == 60:
         return servos.servo1.angles == 60
@@ -81,6 +89,7 @@ def Limite_Position(ID_control):                          #renvoie True ou false
     elif servos.servo6.angles == 60:
         return servos.servo6.angles == 60
     pass
+
 
 def bras(ID_Control):
     ID = Conversion_Chaine_to_List(ID_Control)
@@ -98,10 +107,10 @@ def bras(ID_Control):
         Status = ID[
             1]  # les valeurs ID seront convertie en True ou False qui pourront etre interpreter par le compilateur
         Etat = 0
-        if Status is True and Etat == 0:  # ligne pour grader le servo dans une position permanente en appuyant deux
+        if Status and Etat == 0:  # ligne pour grader le servo dans une position permanente en appuyant deux
             # fois sur la meme touche
             Etat = 1
-        elif Status is True and Etat == 1:
+        elif Status and Etat == 1:
             Etat = 0
 
         if Etat == 1:
@@ -125,7 +134,7 @@ def bras(ID_Control):
         elif not Status:
             servos.servos5.angles = 85
             time.sleep(0.1)
-#===================== Bras Gauche ========================================================#
+    # ===================== Bras Gauche ========================================================#
 
     if ID[0] == 100:  # Id pour le joystic Manette.JL
         X, Y = ID[1], ID[2]  # les valeurs ID seront convertie en valeur entre 0 et 180
@@ -140,10 +149,10 @@ def bras(ID_Control):
         Status = ID[
             1]  # les valeurs ID seront convertie en True ou False qui pourront etre interpreter par le compilateur
         Etat = 0
-        if Status is True and Etat == 0:  # ligne pour grader le servo dans une position permanente en appuyant deux
+        if Status and Etat == 0:  # ligne pour grader le servo dans une position permanente en appuyant deux
             # fois sur la meme touche
             Etat = 1
-        elif Status is True and Etat == 1:
+        elif Status and Etat == 1:
             Etat = 0
 
         if Etat == 1:
@@ -159,13 +168,15 @@ def bras(ID_Control):
         time.sleep(0.1)  # A voir si utile
 
     elif ID[0] == 700:  # Id pour le joystic Manette.L1   # LA PINCE
-        Status = ID[1]  # les valeurs ID seront convertie en True ou False qui pourront etre interpreter par le compilateur
+        Status = ID[
+            1]  # les valeurs ID seront convertie en True ou False qui pourront etre interpreter par le compilateur
         if Status:
             servos.servos10.angles = 0  # A voir si bon angle
             time.sleep(0.1)  # A voir si utile
         elif not Status:
             servos.servos10.angles = 85
             time.sleep(0.1)
+
 
 def tete(ID_Control):
     ID = Conversion_Chaine_to_List(ID_Control)
@@ -180,8 +191,8 @@ def tete(ID_Control):
 
 
 # ==================== Connection Raspberry  et execution ===================================================#
-#serveur
-#HOST = input(str('Adresse IP du serveur')) # a voir si utile
+# serveur
+# HOST = input(str('Adresse IP du serveur')) # a voir si utile
 HOST = ''  # Server IP or Hostname   # a completer #mettre adressse ip du serve et le reporter au clien code poste
 PORT = 12345  # Pick an open Port (1000+ recommended), must match the client sport
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -200,31 +211,28 @@ print('Connected')
 
 while True:
     data = conn.recv(1024)
-    print (data)
+    print(data)
     if data == b'terminate':
         conn.close()
         break
-        
+
     N_data = Conversion_Chaine_to_List(data)
-    print (N_data)
-    
+    print(N_data)
+
     if N_data[0] == 1000:
-       StatusMode(N_data,Etat)
-       print('Mode:',Etat)
+        StatusMode(N_data, Etat)
+        print('Mode:', Etat)
 
-    if Etat == 0:                                      #mode pour le controle des moteurs avec L2 et R2 pour aller tous ver l avant et L1 et R1 pour marche arriere
-        if N_data[0]>= 500 and N_data[0] <=800:
-            Moteur(N_data)  #a cree
-    elif Etat == 1:                                    #mode pour le controle des bras
-       if N_data[0] >= 100 and N_data[0] <=800:
-           Bras(N_data)
+    if Etat == 0:  # mode pour le controle des moteurs avec L2 et R2 pour aller tous ver l avant et L1 et R1 pour
+        # marche arriere
+        if 500 <= N_data[0] <= 800:
+            Moteur(N_data)  # a cree
+    elif Etat == 1:  # mode pour le controle des bras
+        if 100 <= N_data[0] <= 800:
+            Bras(N_data)
     elif Etat == 2:
-       if N__data[0] == 100:                           #mode pour le controle de la tete
-           Tete(N_data)
-
-
-
-
+        if N__data[0] == 100:  # mode pour le controle de la tete
+            Tete(N_data)
 
 '''
 Les ID_Control
