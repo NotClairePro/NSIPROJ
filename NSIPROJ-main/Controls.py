@@ -40,6 +40,7 @@ def strt(Manette):
         print("Detected joystick "), joysticks[-1].get_name(), "'"
 
     while True:
+        Manette.init = True
         clock.tick(10)
         for event in pygame.event.get():
             # The 0 button is the 'a' button, 1 is the 'b' button, 2 is the 'x' button, 3 is the 'y' button
@@ -116,4 +117,3 @@ def strt(Manette):
                     Manette.Menu = False
                 elif event.button == 13:
                     Manette.Pad = False
-            print(Manette)

@@ -1,5 +1,7 @@
 import time
 import socket
+
+
 from adafruit_servokit import ServoKit
 
 # ==================== Fonction General =======================================================#
@@ -21,19 +23,8 @@ class Servos:
         self.servos11 = kit.servo[5]
         self.servos12 = kit.servo[4]
 
-    def angles(self):
-        self.servos1.angle = 85
-        self.servos2.angle = 85
-        self.servos3.angle = 85
-        self.servos4.angle = 85
-        self.servos5.angle = 85
-        self.servos6.angle = 85
-        self.servos7.angle = 85
-        self.servos8.angle = 85
-        self.servos9.angle = 85
-        self.servos10.angle = 85
-        self.servos11.angle = 85
-        self.servos12.angle = 85
+        for i in range(4, 16):
+            setattr(kit.servo[i], "angles", 85)
 
 
 servos = Servos()
@@ -80,14 +71,14 @@ def StatusMode(ID_Control, Etat):
 
 
 def Limite_Position(ID_control):  # renvoie True ou false
-    if servos.servo1.angles == 180:  # revoir
-        return servos.servo1.angles == 180
-    elif servos.servo1.angles == 60:
-        return servos.servo1.angles == 60
-    elif servos.servo6.angles == 180:
-        return servos.servo6.angles == 180
-    elif servos.servo6.angles == 60:
-        return servos.servo6.angles == 60
+    if servos.servos1.angles == 180:  # revoir
+        return servos.servos1.angles == 180
+    elif servos.servos1.angles == 60:
+        return servos.servos1.angles == 60
+    elif servos.servos6.angles == 180:
+        return servos.servos6.angles == 180
+    elif servos.servos6.angles == 60:
+        return servos.servos6.angles == 60
     pass
 
 
@@ -208,7 +199,7 @@ s.listen(5)
 print('Socket awaiting messages')
 (conn, addr) = s.accept()
 print('Connected')
-
+"""
 while True:
     data = conn.recv(1024)
     print(data)
@@ -233,6 +224,7 @@ while True:
     elif Etat == 2:
         if N__data[0] == 100:  # mode pour le controle de la tete
             Tete(N_data)
+"""
 
 '''
 Les ID_Control
