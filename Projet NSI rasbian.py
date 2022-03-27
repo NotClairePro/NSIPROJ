@@ -26,11 +26,12 @@ class Servos:
 
 
 class Robot:
-    def __init__(self, listeServos: Servo):
+    def __init__(self, base: Servos):
         """
-
-        :param listeServos:
+        :param base:
         """
+        self.base = base
+        listeServos = base.lservo
         self.bras_droit = listeServos[0:5]
         self.bras_gauche = listeServos[5:10]
         self.tete = listeServos[10:11]
@@ -41,9 +42,9 @@ class Robot:
         bras_gauche = {self.ensemble["bras_gauche"]}
         tete = {self.ensemble["tete"]}"""
 
-    def setPosition(self, bras_droit=None,
-                    bras_gauche=None,
-                    tete=None):
+    def setPosition(self, bras_droit: list[tuple[int]] = None,
+                    bras_gauche: list[tuple[int]] = None,
+                    tete: list[tuple[int]] = None):
         """
         :param bras_droit:
         :param bras_gauche:
@@ -51,31 +52,27 @@ class Robot:
         :return:
         """
         if bras_droit:
-            print(bras_droit)
-        else:
-            print("Pas de bras droit")
-            bras_droit = [elem.angle for elem in self.bras_droit]
+            for i in range(len(bras_droit[0])):
+                self.bras_droit[0][i].angle = bras_droit[1][i]
         if bras_gauche:
-            print(bras_gauche)
-        else:
-            print("Pas de bras gauche")
-            bras_gauche = [elem.angle for elem in self.bras_gauche]
+            for i in range(len(bras_gauche[0])):
+                self.bras_gauche[0][i].angle = bras_gauche[1][i]
         if tete:
-            print(tete)
-        else:
-            print("Pas de tete")
-            tete = [elem.angle for elem in self.tete]
+            for i in range(len(tete[0])):
+                self.tete[0][i].angle = tete[1][i]
 
-        for i in range(len(bras_droit)):
-            self.bras_droit[i].angle = bras_droit[i]
-        for i in range(len(bras_gauche)):
-            self.bras_gauche[i].angle = bras_gauche[i]
-        for i in range(len(tete)):
-            self.tete[i].angle = tete[i]
+    def bougerListeServo(self, listeServo, listeAngle):
+        """
+        :param listeServo:
+        :param listeAngle:
+        :return:
+        """
+        for i in range(len(listeServo)):
+            self.base.lservo[listeServo[i]].angle = listeAngle[i]
 
 
 servos = Servos()
-Robot = Robot(servos.lservo)
+Robot = Robot(servos)
 
 
 def Conversion_Chaine_to_List(Chaine):  # Convertisseur de la chaine de carctere recu, en liste de valeur >0
