@@ -67,6 +67,7 @@ class Controls:
         self.JR = [0, 0]
         self.TouchPad = [0, 0]
 
+
 def Strt(Manette):
     while keepPlaying:
         clock.tick(30)
@@ -132,8 +133,6 @@ def Strt(Manette):
                 elif event.button == 14:
                     Manette.Right = True
 
-
             elif event.type == pygame.CONTROLLERTOUCHPADMOTION:
                 Manette.TouchPad = [event.x, event.y]
         break
-

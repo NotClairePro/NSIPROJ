@@ -1,7 +1,6 @@
 import time
 import socket
 
-
 from adafruit_servokit import ServoKit
 
 # ==================== Fonction General =======================================================#
@@ -22,12 +21,61 @@ class Servos:
         self.servos10 = kit.servo[6]
         self.servos11 = kit.servo[5]
         self.servos12 = kit.servo[4]
+        self.lservo = [self.servos1, self.servos2, self.servos3, self.servos4, self.servos5, self.servos6, self.servos7,
+                       self.servos8, self.servos9, self.servos10, self.servos11, self.servos12]
 
-        for i in range(4, 16):
-            setattr(kit.servo[i], "angles", 85)
+
+class Robot:
+    def __init__(self, listeServos: Servo):
+        """
+
+        :param listeServos:
+        """
+        self.bras_droit = listeServos[0:5]
+        self.bras_gauche = listeServos[5:10]
+        self.tete = listeServos[10:11]
+        self.ensemble = {"bras_droit": self.bras_droit, "bras_gauche": self.bras_gauche, "tete": self.tete}
+
+    def __repr__(self):
+        return f"""bras_droit = {self.ensemble["bras_droit"]}
+        bras_gauche = {self.ensemble["bras_gauche"]}
+        tete = {self.ensemble["tete"]}"""
+
+    def setPosition(self, bras_droit=None,
+                    bras_gauche=None,
+                    tete=None):
+        """
+        :param bras_droit:
+        :param bras_gauche:
+        :param tete:
+        :return:
+        """
+        if bras_droit:
+            print(bras_droit)
+        else:
+            print("Pas de bras droit")
+            bras_droit = [elem.angle for elem in self.bras_droit]
+        if bras_gauche:
+            print(bras_gauche)
+        else:
+            print("Pas de bras gauche")
+            bras_gauche = [elem.angle for elem in self.bras_gauche]
+        if tete:
+            print(tete)
+        else:
+            print("Pas de tete")
+            tete = [elem.angle for elem in self.tete]
+
+        for i in range(len(bras_droit)):
+            self.bras_droit[i].angle = bras_droit[i]
+        for i in range(len(bras_gauche)):
+            self.bras_gauche[i].angle = bras_gauche[i]
+        for i in range(len(tete)):
+            self.tete[i].angle = tete[i]
 
 
 servos = Servos()
+Robot = Robot(servos.lservo)
 
 
 def Conversion_Chaine_to_List(Chaine):  # Convertisseur de la chaine de carctere recu, en liste de valeur >0
@@ -71,14 +119,14 @@ def StatusMode(ID_Control, Etat):
 
 
 def Limite_Position(ID_control):  # renvoie True ou false
-    if servos.servos1.angles == 180:  # revoir
-        return servos.servos1.angles == 180
-    elif servos.servos1.angles == 60:
-        return servos.servos1.angles == 60
-    elif servos.servos6.angles == 180:
-        return servos.servos6.angles == 180
-    elif servos.servos6.angles == 60:
-        return servos.servos6.angles == 60
+    if servos.servos1.angle == 180:  # revoir
+        return servos.servos1.angle == 180
+    elif servos.servos1.angle == 60:
+        return servos.servos1.angle == 60
+    elif servos.servos6.angle == 180:
+        return servos.servos6.angle == 180
+    elif servos.servos6.angle == 60:
+        return servos.servos6.angle == 60
     pass
 
 
