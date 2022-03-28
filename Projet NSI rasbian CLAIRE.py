@@ -1,11 +1,12 @@
 import time
 import socket
-
+import board 
+import neopixel
 from adafruit_servokit import ServoKit
 
 # ==================== Fonction General =======================================================#
 kit = ServoKit(channels=16)
-
+pixels = neopixel.Neopixel(board.D18,3)
 
 class Servos:
     def __init__(self):
@@ -24,7 +25,6 @@ class Servos:
         self.lservo = [self.servos1, self.servos2, self.servos3, self.servos4, self.servos5, self.servos6, self.servos7,
                        self.servos8, self.servos9, self.servos10, self.servos11, self.servos12]
 
-
 class Robot:
     def __init__(self, base: Servos):
         """
@@ -34,7 +34,7 @@ class Robot:
         listeServos = base.lservo
         self.bras_droit = listeServos[0:5]
         self.bras_gauche = listeServos[5:10]
-        self.tete = listeServos[10:11]
+        self.tete = listeServos[10:12]
         self.ensemble = {"bras_droit": self.bras_droit, "bras_gauche": self.bras_gauche, "tete": self.tete}
 
     def __repr__(self):
@@ -82,4 +82,38 @@ Robot.bougerListeServo([0,1,2,3,4,5,6,7,8,9,10,11], [85,85,85,85,85,85,85,85,85,
 # cela veut dire que l'on veut appeler la fonction setPosition avec les arguments suivants :
 # 1. bras_droit = [(1,85),(2,85),(3,85),(4,85),(5,85)]
 # 2. bras_gauche = [(1,85),(2,85),(3,85),(4,85),(5,85)]
+
+
+HOST = "" #Ip du serveur 
+PORT = 12345
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+print('Socket created')
+
+# managing error exception
+try:
+    s.bind((HOST, PORT))
+except socket.error:
+    print('Bind failed ')
+    sys.exit()
+
+s.listen(5)
+print('Socket awaiting messages')
+(conn, addr) = s.accept()
+print('Connected')
+if (conn, addr) = s.accept():
+    pixels[0] = (0,255,0)
+
+while True:
+    data = conn.recv(1024)
+    print(data)
+    if data == 'terminate':
+        conn.close()
+        break
+    N_data = list(data.decode('utf-8'))
+    print(N_data)
+    Robot.setPosition(N_data)
+    
+                       
+   
+    
 
