@@ -73,7 +73,7 @@ class Robot:
 
 servos = Servos()
 Robot = Robot(servos)
-Robot.bougerListeServo([0,1,2,3,4,5,6,7,8,9,10,11], [85,85,85,85,85,85,85,85,85,85,85])
+Robot.bougerListeServo([0,1,2,3,4,5,6,7,8,9,10,11], [85,85,85,85,85,85,85,85,85,85,85,85])
 # l'idée est de recevoir une série d'informations pour le serveur:
 # 1. la fonction à appeler (en fonction de quel bouton est préssé côté client)
 # 2. les arguments de la fonction
