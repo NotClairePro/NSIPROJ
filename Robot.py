@@ -41,7 +41,7 @@ class Robot:
         """
         self.bras_droit = listeServos[0:5]
         self.bras_gauche = listeServos[5:10]
-        self.tete = listeServos[10:11]
+        self.tete = listeServos[10:12]
         self.ensemble = {"bras_droit": self.bras_droit, "bras_gauche": self.bras_gauche, "tete": self.tete}
 
     def __repr__(self):
@@ -87,6 +87,6 @@ Robot = Robot(servos.lservo)
 print(Robot)
 Robot.setPosition()
 print(Robot)
-Robot.setPosition(bras_droit=[90, 90, 90, 90, 90], bras_gauche=[90, 90, 90, 90, 90], tete=[90])
+Robot.setPosition(bras_droit=[90, 90, 90, 90, 90], bras_gauche=[90, 90, 90, 90, 90], tete=[90,90])
 
 print(Robot)
