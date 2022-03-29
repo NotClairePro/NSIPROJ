@@ -9,7 +9,6 @@ serv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 serv.connect((HOST, PORT))
 print("Connection on {}".format(PORT))
 
-
 if __name__ == '__main__':
     Manette = Controls()
 
@@ -19,10 +18,10 @@ if __name__ == '__main__':
     while True:
         Strt(Manette)
         if Manette.Menu:
-            mode += 1
-            if mode > 2:
+            if Manette.T:
+                mode = 1
+            elif Manette.X:
                 mode = 0
-
 
         if mode == 0:  # bouger
             func = "bougerListeServo"
@@ -81,16 +80,16 @@ if __name__ == '__main__':
 
                 if Manette.Up:
                     time.sleep(0.5)
-                    serv.send(f"{[func, [11], [5]]}".encode('UTF-8'))
+                    serv.send(f"{[func, [10], [5]]}".encode('UTF-8'))
                 elif Manette.Down:
                     time.sleep(0.5)
-                    serv.send(f"{[func, [11], [-5]]}".encode('UTF-8'))
+                    serv.send(f"{[func, [10], [-5]]}".encode('UTF-8'))
                 elif Manette.Left:
                     time.sleep(0.5)
-                    serv.send(f"{[func, [10], [5]]}".encode('UTF-8'))
+                    serv.send(f"{[func, [11], [5]]}".encode('UTF-8'))
                 elif Manette.Right:
                     time.sleep(0.5)
-                    serv.send(f"{[func, [10], [-5]]}".encode('UTF-8'))
+                    serv.send(f"{[func, [11], [-5]]}".encode('UTF-8'))
         else:  # setPosition
             print("boop")
             func = "setPosition"
