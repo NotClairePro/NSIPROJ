@@ -45,6 +45,24 @@ class Controls:
         print(r)
         return r
 
+    def reset(self):
+        self.X = False
+        self.R = False
+        self.T = False
+        self.C = False
+        self.L1 = False
+        self.R1 = False
+        self.Share = False
+        self.Opt = False
+        self.Menu = False
+        self.LSB = False
+        self.RSB = False
+        self.Up = False
+        self.Down = False
+        self.Left = False
+        self.Right = False
+
+
 def Strt(Manette):
     while keepPlaying:
         clock.tick(60)
@@ -92,7 +110,6 @@ def Strt(Manette):
                 elif event.button == 8:
                     Manette.RSB = True
                 elif event.button == 9:
-                    print(event)
                     Manette.L1 = True
                 elif event.button == 10:
                     Manette.R1 = True
@@ -125,7 +142,6 @@ def Strt(Manette):
                     Manette.RSB = False
                 elif event.button == 9:
                     Manette.L1 = False
-                    print(event)
                 elif event.button == 10:
                     Manette.R1 = False
                 elif event.button == 11:

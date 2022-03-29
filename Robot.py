@@ -87,6 +87,6 @@ Robot = Robot(servos.lservo)
 print(Robot)
 Robot.setPosition()
 print(Robot)
-Robot.setPosition(bras_droit=[90, 90, 90, 90, 90], bras_gauche=[90, 90, 90, 90, 90], tete=[90,90])
+Robot.setPosition(bras_droit=[90, 90, 90, 90, 90], bras_gauche=[90, 90, 90, 90, 90], tete=[90, 90])
 
 print(Robot)
