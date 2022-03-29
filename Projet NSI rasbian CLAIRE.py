@@ -71,6 +71,7 @@ class Robot:
         :return:
         """
         for i in range(len(listeServo)):
+            time.sleep(0.5)
             self.base.lservo[listeServo[i]].angle = listeAngle[i]
 
 
