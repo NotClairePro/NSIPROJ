@@ -104,6 +104,7 @@ while True:
             break
         if N_data == "getPos":
             conn.send(f"{[mot.angle for mot in servos.lservo]}".encode('utf-8'))
+            continue
         liste = eval(N_data)
         if liste[0] == 'bougerListeServo':
             Robot.bougerListeServo(liste[1], liste[2])
