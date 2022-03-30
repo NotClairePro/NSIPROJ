@@ -9,7 +9,7 @@ from adafruit_servokit import ServoKit
 kit = ServoKit(channels=16)
 pixels = neopixel.Neopixel(board.D18, 3)
 
-
+sens = int(input("sensi: "))
 class Servos:
     def __init__(self):
         self.servos1 = kit.servo[11]
@@ -106,5 +106,7 @@ while True:
             conn.send(f"{[mot.angle for mot in servos.lservo]}".encode('utf-8'))
             continue
         liste = eval(N_data)
+
+        liste[2] = [servos.lservo[liste[1][i]].angle - round(liste[2][i] * sens) for i in liste[2]]
         if liste[0] == 'bougerListeServo':
             Robot.bougerListeServo(liste[1], liste[2])

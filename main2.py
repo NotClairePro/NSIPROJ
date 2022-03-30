@@ -76,7 +76,9 @@ if __name__ == '__main__':
                 time.sleep(0.5)
         # On n'est pas dans le mode de controle de servo individuel
         elif Manette.L2 and Manette.R2:
-
+                if Manette.Menu:
+                    serv.send(f"{[func, [o for o in range(12)], dictPositions[Names[CurrentPos]]]}".encode('UTF-8'))
+                    time.sleep(5)
                 if Manette.Up:
                     CurrentPos = CurrentPos + (CurrentPos+1 < len(Names))
                 if Manette.Down:
