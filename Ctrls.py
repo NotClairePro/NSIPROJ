@@ -45,7 +45,7 @@ class Controls:
         print(r)
         return r
 
-    def reset(self):
+    def reset(self): #après une commande, les valeurs des commandes doivent être mis à False, afin d'éviter qu'un servo-moteur soit constamment appelé jusqu'à ce qu'il arrête de fonctionner 
         self.X = False
         self.R = False
         self.T = False
@@ -68,7 +68,7 @@ def Strt(Manette):
         clock.tick(60)
         for event in pygame.event.get():
 
-            if event.type == pygame.JOYAXISMOTION:
+            if event.type == pygame.JOYAXISMOTION: #if Joysticks are moved in X or Y axis
                 if event.axis < 2:
                     if 0.1 > event.value > -0.1:
                         Manette.JL[event.axis] = 0
@@ -90,7 +90,7 @@ def Strt(Manette):
                         Manette.R2 = 0
                     else:
                         Manette.R2 = event.value + 1
-            elif event.type == pygame.JOYBUTTONDOWN:
+            elif event.type == pygame.JOYBUTTONDOWN: # checks if any button (X,Y,A,B) is pressed down
                 if event.button == 0:
                     Manette.X = True
                 elif event.button == 1:
@@ -121,7 +121,7 @@ def Strt(Manette):
                     Manette.Left = True
                 elif event.button == 14:
                     Manette.Right = True
-            elif event.type == pygame.JOYBUTTONUP:
+            elif event.type == pygame.JOYBUTTONUP: #checks if the user stopped pressing any specific button
                 if event.button == 0:
                     Manette.X = False
                 elif event.button == 1:
@@ -152,6 +152,6 @@ def Strt(Manette):
                     Manette.Left = False
                 elif event.button == 14:
                     Manette.Right = False
-            elif event.type == pygame.CONTROLLERTOUCHPADMOTION:
+            elif event.type == pygame.CONTROLLERTOUCHPADMOTION: #checks for use of touch pad
                 Manette.TouchPad = [event.x, event.y]
         break
