@@ -106,7 +106,7 @@ while True:
             conn.send(f"{[mot.angle for mot in servos.lservo]}".encode('utf-8'))
             continue
         liste = eval(N_data)
-        temp = [servos.lservo[liste[1][i]].angle - round(liste[2][i] * sens) for i in liste[2]]
+        liste[2] = [85 * (elem+1) for elem in liste[2] ]
         if liste[0] == 'bougerListeServo':
             time.sleep(1)
-            Robot.bougerListeServo(liste[1], temp)
+            Robot.bougerListeServo(liste[1], liste[2])
