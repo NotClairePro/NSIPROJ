@@ -17,13 +17,13 @@ class Servos:
         self.servos3 = kit.servo[13]
         self.servos4 = kit.servo[14]
         self.servos5 = kit.servo[15]
-        self.servos6 = kit.servo[10]
-        self.servos7 = kit.servo[9]
-        self.servos8 = kit.servo[8]
+        self.servos6 = kit.servo[4]
+        self.servos7 = kit.servo[5]
+        self.servos8 = kit.servo[6]
         self.servos9 = kit.servo[7]
-        self.servos10 = kit.servo[6]
-        self.servos11 = kit.servo[5]
-        self.servos12 = kit.servo[4]
+        self.servos10 = kit.servo[8]
+        self.servos11 = kit.servo[10]
+        self.servos12 = kit.servo[9]
         self.lservo = [self.servos1, self.servos2, self.servos3, self.servos4, self.servos5, self.servos6, self.servos7,
                        self.servos8, self.servos9, self.servos10, self.servos11, self.servos12]
 
@@ -38,9 +38,9 @@ class Robot:
         self.bras_gauche = listeServos[0:5]
         self.bras_droit = listeServos[5:10]
         self.tete = listeServos[10:12]
-        self.limites = [[1, 120], [1, 120], [1, 120], [1, 120], [1, 120],  # bras gauche
-                        [1, 120], [1, 120], [1, 120], [1, 120], [1, 120],  # bras_droit
-                        [1, 120], [1, 120]]  # tete
+        self.limites = [[1, 170], [1, 170], [1, 170], [1, 170], [1, 170],  # bras gauche
+                        [1, 170], [1, 170], [1, 170], [1, 170], [1, 170],  # bras_droit
+                        [1, 170], [1, 170]]  # tete
 
     def __repr__(self):
         return f"""bras_gauche = {self.bras_gauche}
