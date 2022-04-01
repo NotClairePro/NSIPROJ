@@ -23,5 +23,6 @@ while True:
 			conn.send(f"{lservo}".encode('utf-8'))
 			continue
 		liste = eval(N_data)
+
 		if liste[0] == 'bougerListeServo':
 			print(liste)
