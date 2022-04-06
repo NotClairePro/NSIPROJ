@@ -15,6 +15,8 @@ GPIO.setup(..., GPIO.OUT)
 GPIO.setup(..., GPIO.OUT) #signal PWM
 GPIO.setup(..., GPIO.OUT)
 GPIO.setup(..., GPIO.OUT)
+PWM = GPIO.PWM(07, 100)
+PWM = GPIO.PWM(...,100)
 
 class Robot:
     def __init__(self):
