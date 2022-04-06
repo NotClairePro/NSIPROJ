@@ -3,19 +3,25 @@ import time
 import socket
 import board
 import neopixel
+import RPi.GPIO as GPIO
 from adafruit_servokit import ServoKit
 
 # ==================== Fonction General =======================================================#
 kit = ServoKit(channels=16)
 pixels = neopixel.Neopixel(board.D18, 3)
-
+GPIO.setup(07, GPIO.OUT) #signal PWM
+GPIO.setup(..., GPIO.OUT)
+GPIO.setup(..., GPIO.OUT)
+GPIO.setup(..., GPIO.OUT) #signal PWM
+GPIO.setup(..., GPIO.OUT)
+GPIO.setup(..., GPIO.OUT)
 
 class Robot:
     def __init__(self):
         """
         :param base:
         """
-		self.servos1 = kit.servo[11]
+	self.servos1 = kit.servo[11]
         self.servos2 = kit.servo[12]
         self.servos3 = kit.servo[13]
         self.servos4 = kit.servo[14]
@@ -29,7 +35,7 @@ class Robot:
         self.servos12 = kit.servo[9]
         self.lServos = [self.servos1, self.servos2, self.servos3, self.servos4, self.servos5, self.servos6, self.servos7,
                        self.servos8, self.servos9, self.servos10, self.servos11, self.servos12]
-		self.roues = ["trucs"]
+	self.roues = [0, False, False, 0, False, False]
         self.limites = [[1, 170], [1, 170], [1, 170], [1, 170], [1, 170],  # bras gauche
                         [1, 170], [1, 170], [1, 170], [1, 170], [1, 170],  # bras_droit
                         [1, 170], [1, 170]]  # tete
@@ -61,9 +67,10 @@ class Robot:
         for i in range(len(listeServo)):
             time.sleep(0.1)
             self.lServos[listeServo[i]].angle = listeAngle[i]
-	def avance(self, IDS: list, Instructions: list):
-		for i in range(len(IDS)):
-			self.roues[IDS[i]] = Instructions[i]
+		
+    def avance(self, IDS: list, Instructions: list):
+        for i in range(len(IDS)):
+		self.roues[IDS[i]] = Instructions[i]
 		
 		
 
