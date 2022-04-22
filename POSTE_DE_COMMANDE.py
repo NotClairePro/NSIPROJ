@@ -159,7 +159,7 @@ if __name__ == '__main__':
             elif Manette.R:  # ajouter la pos dans dictPositions
                 serv.send(f"getPos".encode('UTF-8'))
                 time.sleep(1)
-                data = serv.recv(1024)
+                data = serv.recv(1024)#envoie la position qu'on a input dans la console
                 data = data.decode('UTF-8')
                 data = eval(data)
                 data = [int(elem) for elem in data]
