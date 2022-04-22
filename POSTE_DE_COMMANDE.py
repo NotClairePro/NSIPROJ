@@ -39,11 +39,11 @@ if __name__ == '__main__':
                     onpeu = True
             continue
 
-        if Manette.L1 and Manette.R1 and Manette.L2 and Manette.R2: #si toutes ces boutons son maintenu alors la connection est terminée et la boucle s'arrete
+        if Manette.L1 and Manette.R1 and Manette.L2 and Manette.R2: #la connection est terminée et la boucle s'arrete
             serv.send("terminate".encode("UTF-8"))
             break
 
-        elif Manette.L1: # si on maintient L1 alors on est dans le mode de Choix du servChoisi a bouger:
+        elif Manette.L1: # si on maintient L1 alors on est dans le mode de Choix du moteur a bouger:
             if Manette.T: #chaque bouton correspond a un servo 
                 servChoisi = 1
             elif Manette.R:
@@ -106,7 +106,7 @@ if __name__ == '__main__':
                         'UTF-8'))
                 onpeu = False
                 continue
-            else : #si R2 ou L2 ne sont pas appuyer alors on envoie la liste d'instructions
+            else : #si R2 ou L2 ne sont pas appuyés alors on envoie la liste d'instructions
                 serv.send(
                     f"{['avancer', [0, 1, 2, 3, 4, 5], [0, False,False,0, False, False]]}".encode(
                         'UTF-8'))
@@ -114,7 +114,7 @@ if __name__ == '__main__':
                 onpeu = False
                 continue
 
-        elif Manette.X: #meme chose qu plus haut mais ici on est dans le mode pour reculer
+        elif Manette.X: #mode pour reculer
             if Manette.R2 and Manette.L2:
                 serv.send(
                     f"{['avancer', [0, 1, 2, 3, 4, 5], [int(Manette.L2 * 50), False, True, int(Manette.R2 * 50), False, True]]}".encode(
@@ -141,22 +141,21 @@ if __name__ == '__main__':
                 onpeu = False
                 continue
                 
-        elif Manette.RSB: #si maintenu alors on est dans le mode d'enregistrement des position, du choix de la position, mise en position ou supression d une position
+        elif Manette.RSB: #positions
             
-            if Manette.Menu: #mode de mise en position 
+            if Manette.Menu: #enregistrement de position
                 serv.send(f"{[func, [o for o in range(12)], dictPositions[Names[CurrentPos]]]}".encode('UTF-8')) #envoie des position de servo coorespondant au nom de la positon dans le doc position.txt
                 onpeu = False
 
-            elif Manette.Up: #mode de choix de la postion 
+            elif Manette.Up: #choix de la postion 
                 CurrentPos = CurrentPos + (CurrentPos + 1 < len(Names))
                 time.sleep(0.2)
-                print(f'Position choisi:{Names[CurrentPos]}') #en fonction du nombre d appuie sur le bouton en defini l'indice de la position qui sera ensuite chercher dans le doc
-
-            elif Manette.Down: #mode de choix de la postion
+                print(f'Position choisi:{Names[CurrentPos]}') 
+            elif Manette.Down:
                 CurrentPos = CurrentPos - (CurrentPos > 0)
                 time.sleep(0.2)
-                print(f'Position choisi:{Names[CurrentPos]}') #en fonction du nombre d appuie sur le bouton en defini l'indice de la position qui sera ensuite chercher 
-
+                print(f'Position choisi:{Names[CurrentPos]}') 
+		
             elif Manette.R:  # ajouter la pos dans dictPositions
                 serv.send(f"getPos".encode('UTF-8'))
                 time.sleep(1)
@@ -183,7 +182,7 @@ if __name__ == '__main__':
             continue
         else:
 
-            if Manette.JL != [0, 0]:  # servChoisi 0 et servChoisi 2 = bras gauche
+            if Manette.JL != [0, 0]: 
                 angles = Manette.JL
                 for k in range(len(angles)):
                     if angles[k] > 1:
@@ -192,7 +191,7 @@ if __name__ == '__main__':
                         angles[k] = -1
                 serv.send(f"{[func, [0, 2], [angles[1], angles[0]]]}".encode('UTF-8'))
                 onpeu = False
-            elif Manette.JR != [0, 0]:  # servChoisi 0 et servChoisi 2 = bras droit
+            elif Manette.JR != [0, 0]: 
                 angles = Manette.JR
                 for k in range(len(angles)):
                     if angles[k] > 1:
