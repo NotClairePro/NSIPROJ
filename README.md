@@ -11,3 +11,5 @@ Pour le contrôle des roues on utilise le module L293D contrôler par les GPIO d
 
 amogus
 sussy baka
+eat the baka 
+sugamogus
