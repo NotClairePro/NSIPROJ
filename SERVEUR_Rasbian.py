@@ -122,7 +122,9 @@ while True: #on entre dans la boucle infini
         if abs(liste[2][0]) == 5:
             liste[2][0] = Robot.lServos[liste[1][0]].angle + (10 + (20 * -(liste[2][0] == -5)))
         if max(liste[2]) < 1.3:
-            liste[2] = [85 * (elem+1) for elem in liste[2] ]
+            l = []
+            for i in range(len(liste[2])):
+                liste[2][i] = Robot.limites[liste[1][i]][0] + ( (Robot.limites[liste[1][i]][1]- Robot.limites[liste[1][i]][0]) /2) * (liste[2][i]+1)
             
         if liste[0] == 'bougerListeServo':#cette conparaison permet de veriffeir dans quel mode de mouvement entrer
             if liste[2] == [100, 180, 0, 180, 70, 70, 0, 170, 85, 85, 75, 160]: #si la liste de donnet correspond au default alors on allume la led bleu
