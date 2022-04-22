@@ -10,3 +10,4 @@ Le contrôle de se module se fait à partir le la bibliothèque Adafruit SERVOKI
 Pour le contrôle des roues on utilise le module L293D contrôler par les GPIO du Raspberry.
 
 amogus
+sussy baka
