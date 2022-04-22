@@ -67,23 +67,23 @@ def Strt(Manette):
         for event in pygame.event.get():
 
             if event.type == pygame.JOYAXISMOTION: #contrôle des joysticks
-                if event.axis < 2:
+                if event.axis < 2: #vérifie l'axe Y du joystick gauche
                     if 0.1 > event.value > -0.1:
                         Manette.JL[event.axis] = 0
                     else:
                         Manette.JL[event.axis] = event.value
 
-                elif event.axis < 4:
+                elif event.axis < 4: #vérifie l'axe Y du joystick droit
                     if 0.1 > event.value > -0.1:
                         Manette.JR[event.axis - 2] = 0
                     else:
                         Manette.JR[event.axis - 2] = event.value
-                elif event.axis == 4:
+                elif event.axis == 4: #vérifie l'axe du bouton L2
                     if event.value + 1 < 0.0003:
                         Manette.L2 = 0
                     else:
                         Manette.L2 = event.value + 1
-                elif event.axis == 5:
+                elif event.axis == 5: #vérifie l'axe du bouton R2
                     if event.value + 1 < 0.0003:
                         Manette.R2 = 0
                     else:
