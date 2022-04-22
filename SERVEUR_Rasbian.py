@@ -19,7 +19,7 @@ GPIO.setup(6, GPIO.OUT)
 GPIO.setup(5, GPIO.OUT)
 PWM = GPIO.PWM(12, 100)
 PWM2 = GPIO.PWM(13, 100)
-PWM.start(0)
+PWM.start(0) #permet de demarrer le signal qui est initialiser a 0 donc les roues sont a l'arret
 PWM2.start(0)
 
 class Robot:
@@ -136,7 +136,7 @@ while True: #on entre dans la boucle infini
             if liste[2]==[0,False,False,0,False,False]: #si la liste de données correnspons a la valuer nul sur toutes es position alors les rous s arrete 
                 avance(liste[1], [0,0,0,0,0,0])
                 pixels[2]= (255,0,255)
-                GPIO.output(12,False)#desactivation du PWM
+                GPIO.output(12,False) #desactivation du PWM
                 GPIO.output(13,False)
                 
             GPIO.output(12,True)#sinon on reactive le PWM et on lit la liste de donnée 
@@ -147,4 +147,10 @@ while True: #on entre dans la boucle infini
         conn.send('done'.encode('utf-8'))#a la fin de chaque action le serveur envie done pour dire qu il peut realiser une nouvelle demande, 
         #ce dispositive permet de limité les beugs et la surcharge du cerveau au niveau de la lecture de donnée
         
+ '''
+ le signa PWM est un signal modulaire qui sur une certaine periode temps envoie un signal electrique au module de vitesse des 2 moteurs de 12V
+ et en fonction de la fréquence d envoie du signal entre 0 et 100 le module le convertie en courrant de 12V qui est modulée entre 0 et 12V avec une intensité 
+ de 600mA sur chaque moteur, si par exemple en envoie un signal PWM de 75 le courrant déservit sera de ~ 9V
+ '''
+ 
 
