@@ -10,19 +10,17 @@ for i in range(0, pygame.joystick.get_count()):
     joysticks.append(pygame.joystick.Joystick(i))
     # initialize them all (-1 means loop forever)
     joysticks[-1].init()
-    # print a statement telling what the name of the controller is
-    print("Detected joystick "), joysticks[-1].get_name(), "'"
 
 
 class Controls:
-    def __init__(self):
+    def __init__(self): #initalise les boutons de la manette, ainsi que les joysticks 
         self.X = False
         self.R = False
         self.T = False
         self.C = False
         self.L1 = False
         self.R1 = False
-        self.L2 = 0
+        self.L2 = 0 #L2 et R2 contrôlent la vitesse du robot, donc il faut en récupérer les valeurs
         self.R2 = 0
         self.Share = False
         self.Opt = False
@@ -44,7 +42,7 @@ class Controls:
             f" \n" f"JL:{self.JL}, JR:{self.JR} \n "
         print(r)
         return r
-
+'''
     def reset(self):
         self.X = False
         self.R = False
@@ -61,14 +59,14 @@ class Controls:
         self.Down = False
         self.Left = False
         self.Right = False
-
+'''
 
 def Strt(Manette):
     while keepPlaying:
-        clock.tick(30)
+        clock.tick(30) #permet de contrôler le nombre d'informations qu'on envoie au robot en 1 seconde (30 InfosPS)
         for event in pygame.event.get():
 
-            if event.type == pygame.JOYAXISMOTION:
+            if event.type == pygame.JOYAXISMOTION: #contrôle des joysticks
                 if event.axis < 2:
                     if 0.1 > event.value > -0.1:
                         Manette.JL[event.axis] = 0
@@ -90,7 +88,7 @@ def Strt(Manette):
                         Manette.R2 = 0
                     else:
                         Manette.R2 = event.value + 1
-            elif event.type == pygame.JOYBUTTONDOWN:
+            elif event.type == pygame.JOYBUTTONDOWN:#permet de vérifier si un bouton est appuyé, notamment pour la sélection de servomoteurs
                 if event.button == 0:
                     Manette.X = True
                 elif event.button == 1:
@@ -121,7 +119,7 @@ def Strt(Manette):
                     Manette.Left = True
                 elif event.button == 14:
                     Manette.Right = True
-            elif event.type == pygame.JOYBUTTONUP:
+            elif event.type == pygame.JOYBUTTONUP: #permet d'arrêter le bouton, sinon il continue à envoyer des informations
                 if event.button == 0:
                     Manette.X = False
                 elif event.button == 1:
