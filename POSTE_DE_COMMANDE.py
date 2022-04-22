@@ -198,6 +198,7 @@ if __name__ == '__main__':
                         angles[k] = 1
                     elif angles[k] < -1:
                         angles[k] = -1
+		#cette partie permet de limiter les valeurs envoyés par les joysticks à -1 et à 1, pour ensuite convertir à 180 degrés
 
                 serv.send(f"{[func, [7, 5], angles]}".encode('UTF-8'))
                 onpeu = False
