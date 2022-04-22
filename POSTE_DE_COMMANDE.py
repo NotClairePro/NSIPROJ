@@ -1,7 +1,7 @@
 import socket #biblio pour la connection TCP/IP
 import time #biblio pour le temps
 from Ctrls import Strt, Controls
-
+a
 #Connection au serveur ==> ROBOT
 HOST = "192.168.1.61" 
 PORT = 34567 
