@@ -66,7 +66,7 @@ class Robot:
 
         for i in range(len(listeServo)):
             time.sleep(0.1)
-            self.lServos[listeServo[i]].angle = listeAngle[i]] #on associe a chaque objet servos sa nouvelle position en degré avec des valeurs entre 0 et 180
+            self.lServos[listeServo[i]].angle = listeAngle[i] #on associe a chaque objet servos sa nouvelle position en degré avec des valeurs entre 0 et 180
 
 
 def avance(IDS: list, Instructions: list): #fonction destiné aux roues
