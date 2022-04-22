@@ -3,12 +3,13 @@ import time #biblio pour le temps
 from Ctrls import Strt, Controls
 
 #Connection au serveur ==> ROBOT
-HOST = "192.168.1.61"  # The server's hostname or IP address
-PORT = 34567  # The port used by the server
+HOST = "192.168.1.61" 
+PORT = 34567 
 serv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 serv.connect((HOST, PORT))
-print("Connection on {}".format(PORT))
+print(f"{HOST}, {PORT}")
 
+#on initialise les positions
 with open("positions.txt", "r") as f:
     positions = f.readlines()
     for i in range(len(positions)):
@@ -18,8 +19,6 @@ with open("positions.txt", "r") as f:
         rupt = positions[i].index(":")
         dictPositions[positions[i][:rupt]] = eval(positions[i][rupt + 1:])
 
-for key, val in dictPositions.items():
-    print(key, val)
 del positions
 Names = [key for key in dictPositions.keys()]
 
@@ -29,21 +28,23 @@ if __name__ == '__main__':
     servChoisi = 0
     func = "bougerListeServo"
     onpeu = True
-    while True: # on entre dans la boucle infini
-        Strt(Manette) 
-        if onpeu is False:
+    while True: # on entre dans la boucle infinie
+	
+        Strt(Manette) # on récupère les informations de la manette
+		
+        if onpeu is False: #si on a déjà envoyé une information et que le serveur ne nous a pas répondu
             dat = serv.recv(1024)
             if dat:
                 if dat.decode('utf-8') == "done":
                     onpeu = True
             continue
 
-        if Manette.L1 and Manette.R1 and Manette.L2 and Manette.R2: #si toutes ces bouttons son maintenu alors la connection est terminer et la boucle s arrete
+        if Manette.L1 and Manette.R1 and Manette.L2 and Manette.R2: #si toutes ces boutons son maintenu alors la connection est terminée et la boucle s'arrete
             serv.send("terminate".encode("UTF-8"))
             break
 
         elif Manette.L1: # si on maintient L1 alors on est dans le mode de Choix du servChoisi a bouger:
-            if Manette.T: #chaque boutton correspond a un servo 
+            if Manette.T: #chaque bouton correspond a un servo 
                 servChoisi = 1
             elif Manette.R:
                 servChoisi = 2
@@ -53,11 +54,11 @@ if __name__ == '__main__':
                 servChoisi = 4
             elif Manette.Up:
                 servChoisi = 5
-            elif Manette.Down:
-                servChoisi = 6
-            elif Manette.Left:
-                servChoisi = 7
             elif Manette.Right:
+                servChoisi = 6
+            elif Manette.Down:
+                servChoisi = 7
+            elif Manette.Leftt:
                 servChoisi = 8
             elif Manette.LSB:
                 servChoisi = 9
@@ -69,7 +70,8 @@ if __name__ == '__main__':
                 servChoisi = 12
             print(f"serv choisi: {servChoisi}")
             continue
-        elif Manette.R1: #si R1 est maintenus on peut mannipuler le servo choisis avant avec avec les boutton UP/RIGHT/LEFT/DOWN 
+		
+        elif Manette.R1: #si R1 est maintenu on peut manipuler le servo choisi précedemment avec les boutton UP/RIGHT/LEFT/DOWN sur la manette
             if Manette.Up:
                 serv.send(f"{[func, [servChoisi - 1], [5]]}".encode('UTF-8'))
                 onpeu = False
@@ -83,9 +85,10 @@ if __name__ == '__main__':
                 serv.send(f"{[func, [servChoisi - 1], [-5]]}".encode('UTF-8'))
                 onpeu = False
             continue
+		
         # On n'est pas dans le mode de controle de servo individuel
         elif Manette.T: #si on maintient le bouton triangle alors on peut avancer avec le robot
-            if Manette.R2 and Manette.L2: #les deux roux fonctionne
+            if Manette.R2 and Manette.L2: #les deux roues fonctionnent
                 serv.send(
                     f"{['avancer', [0, 1, 2, 3, 4, 5], [int(Manette.L2 * 50),True, False, int(Manette.R2 * 50), True, False]]}".encode(
                         'UTF-8'))
@@ -103,7 +106,7 @@ if __name__ == '__main__':
                         'UTF-8'))
                 onpeu = False
                 continue
-            else : #si R2 ou L2 ne sont pas appuyer allors on envoie la liste de valeurs nul ou false
+            else : #si R2 ou L2 ne sont pas appuyer alors on envoie la liste d'instructions
                 serv.send(
                     f"{['avancer', [0, 1, 2, 3, 4, 5], [0, False,False,0, False, False]]}".encode(
                         'UTF-8'))
