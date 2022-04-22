@@ -5,7 +5,7 @@ import neopixel #biblio pour les leds
 import RPi.GPIO as GPIO #biblio pour la commandes des sorti GPIO du raspberry
 from adafruit_servokit import ServoKit #biblio pour le controle des servos
 
-kit = ServoKit(channels=16)
+kit = ServoKit(channels=16) #variable qui definit le nombre de port possible pour le controle des servos -- controle fait par le bias du PCA9586
 pixels = neopixel.NeoPixel(board.D18, 3)
 
 #defition des différente sortie liée au controle des différent parti du robot 
