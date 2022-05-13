@@ -204,16 +204,16 @@ if __name__ == '__main__':
                         angles[k] = 1
                     elif angles[k] < -1:
                         angles[k] = -1
-                serv.send(f"{[func, [0, 2], [angles[1], angles[0]]]}".encode('UTF-8'))
+                serv.send(f"{[func, [0, 2], [angles[1], -angles[0]]]}".encode('UTF-8'))
                 onpeu = False
-            elif Manette.JR != [0, 0]:  # servChoisi 6 et servChoisi 8 = bras droit
+            elif Manette.JR != [0, 0]:  # servChoisi 7 et servChoisi 5 = bras droit
                 angles = Manette.JR
                 for k in range(len(angles)):
                     if angles[k] > 1:
                         angles[k] = 1
                     elif angles[k] < -1:
                         angles[k] = -1
-                serv.send(f"{[func, [7, 5], angles]}".encode('UTF-8'))
+                serv.send(f"{[func, [7, 5], [-angles[0],-angles[1]]]}".encode('UTF-8'))
                 onpeu = False
 	    #contrôle de la tête avec les bouttons UP/RIGHT/LEFT/DOWN	
             elif Manette.Up:
