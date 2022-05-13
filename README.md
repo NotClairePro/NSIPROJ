@@ -1,6 +1,6 @@
 # Projet Final NSI
 
-Projet Nsi Jules, Claire et Kamil
+Projet Nsi Jules, Claire et Kamil \n
 Le projet est un robot, stylisé sur le dessin animé Wall-E. 
 Pour le contrôle on utilise un Raspberry Pi ZERO W qui sert de serveur. Ce serveur est connecté a un poste de
 commande ici un ordinateur portable étant connecté sur un même réseau que le Raspberry. Pour le contôle on utilise
