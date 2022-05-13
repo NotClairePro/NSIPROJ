@@ -9,7 +9,7 @@ serv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 serv.connect((HOST, PORT))
 print(f"{HOST}, {PORT}")
 
-#on initialise les positions
+#on initialise les positions dans le document position.txt
 with open("positions.txt", "r") as f:
     positions = f.readlines()
     for i in range(len(positions)):
@@ -19,6 +19,8 @@ with open("positions.txt", "r") as f:
         rupt = positions[i].index(":")
         dictPositions[positions[i][:rupt]] = eval(positions[i][rupt + 1:])
 
+for key, val in dictPositions.items(): #on affiche toute les position enregistré dans le doc position.txt
+    print(key, val)
 del positions
 Names = [key for key in dictPositions.keys()]
 
@@ -27,7 +29,8 @@ if __name__ == '__main__':
     CurrentPos = 0
     servChoisi = 0
     func = "bougerListeServo"
-    onpeu = True
+    onpeu = True #variable qui definira la possibilité d envoie d'ine commande ou pas
+
     while True: # on entre dans la boucle infinie
 	
         Strt(Manette) # on récupère les informations de la manette
@@ -71,8 +74,20 @@ if __name__ == '__main__':
             print(f"serv choisi: {servChoisi}")
             continue
 		
-        elif Manette.R1: #si R1 est maintenu on peut manipuler le servo choisi précedemment avec les boutton UP/RIGHT/LEFT/DOWN sur la manette
-            if Manette.Up:
+        elif Manette.R1: #si R1 est maintenu on peut manipuler le servo choisi précedemment avec les bouttons UP/RIGHT/LEFT/DOWN sur la manette ou le joystick gauche
+		
+	    if Manette.JL != [0, 0]:  # servChoisi 0 et servChoisi 2 = bras gauche
+                angles = Manette.JL
+                for k in range(len(angles)):
+                    if angles[k] > 1:
+                        angles[k] = 1
+                    elif angles[k] < -1:
+                        angles[k] = -1
+                if servChoisi == 1:
+                    angles[1] = -angles[1]
+                serv.send(f"{[func, [servChoisi-1], [-angles[1]]]}".encode('UTF-8'))
+                onpeu = False
+            elif Manette.Up:
                 serv.send(f"{[func, [servChoisi - 1], [5]]}".encode('UTF-8'))
                 onpeu = False
             elif Manette.Down:
@@ -147,7 +162,7 @@ if __name__ == '__main__':
                 serv.send(f"{[func, [o for o in range(12)], dictPositions[Names[CurrentPos]]]}".encode('UTF-8')) #envoie des position de servo coorespondant au nom de la positon dans le doc position.txt
                 onpeu = False
 
-            elif Manette.Up: #choix de la postion 
+            elif Manette.Up: #choix de la postion avec les boutons UP ou DOWN
                 CurrentPos = CurrentPos + (CurrentPos + 1 < len(Names))
                 time.sleep(0.2)
                 print(f'Position choisi:{Names[CurrentPos]}') 
@@ -165,9 +180,9 @@ if __name__ == '__main__':
                 data = [int(elem) for elem in data]
                 Names.append(input("Nom de la position: \n"))
                 dictPositions[Names[-1]] = data
-                with open("positions.txt", "w+") as f:
+                with open("positions.txt", "w+") as f: #ouverture du doc txt 
                     for key, val in dictPositions.items():
-                        f.write(f"{key}:{val}\n")
+                        f.write(f"{key}:{val}\n") #écriture de la nouvelle position 
                 print(f"new pos added: {Names[-1]}")
 
             elif Manette.Opt and Manette.Share:  # supprimer la pos dans dictPositions, Names et du fichier
@@ -181,8 +196,8 @@ if __name__ == '__main__':
                             f.write(f"{key}:{val}\n")
             continue
         else:
-
-            if Manette.JL != [0, 0]: 
+            #cette partie permet de limiter les valeurs envoyés par les joysticks à -1 et à 1, pour ensuite convertir à 180 degrés
+            if Manette.JL != [0, 0]:  # servChoisi 0 et servChoisi 2 = bras gauche
                 angles = Manette.JL
                 for k in range(len(angles)):
                     if angles[k] > 1:
@@ -191,17 +206,16 @@ if __name__ == '__main__':
                         angles[k] = -1
                 serv.send(f"{[func, [0, 2], [angles[1], angles[0]]]}".encode('UTF-8'))
                 onpeu = False
-            elif Manette.JR != [0, 0]: 
+            elif Manette.JR != [0, 0]:  # servChoisi 6 et servChoisi 8 = bras droit
                 angles = Manette.JR
                 for k in range(len(angles)):
                     if angles[k] > 1:
                         angles[k] = 1
                     elif angles[k] < -1:
                         angles[k] = -1
-		#cette partie permet de limiter les valeurs envoyés par les joysticks à -1 et à 1, pour ensuite convertir à 180 degrés
-
                 serv.send(f"{[func, [7, 5], angles]}".encode('UTF-8'))
                 onpeu = False
+	    #contrôle de la tête avec les bouttons UP/RIGHT/LEFT/DOWN	
             elif Manette.Up:
                 serv.send(f"{[func, [10], [0.5]]}".encode('UTF-8'))
                 onpeu = False
