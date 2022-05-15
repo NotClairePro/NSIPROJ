@@ -29,7 +29,7 @@ if __name__ == '__main__':
     CurrentPos = 0
     servChoisi = 0
     func = "bougerListeServo"
-    onpeu = True #variable qui definira la possibilité d envoie d'ine commande ou pas
+    onpeu = True #variable qui definira la possibilité d'envoi d'une commande ou pas
 
     while True: # on entre dans la boucle infinie
 	
@@ -46,7 +46,7 @@ if __name__ == '__main__':
             serv.send("terminate".encode("UTF-8"))
             break
 
-        elif Manette.L1: # si on maintient L1 alors on est dans le mode de Choix du moteur a bouger:
+        elif Manette.L1: # si on maintient L1 alors on est dans le mode de Choix du servomoteur a bouger:
             if Manette.T: #chaque bouton correspond a un servo 
                 servChoisi = 1
             elif Manette.R:
